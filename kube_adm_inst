@@ -117,6 +117,18 @@ sudo kubectl describe nodes
 # observing the pods
 kubectl get pods -n kube-system
 
+# to skip node.kubernetes.io/not-ready:NoSchedule
+sudo kubectl taint nodes <node-name> node.kubernetes.io/not-ready:NoSchedule-
+
+# to skip node-role.kubernetes.io/control-plane:NoSchedule
+sudo kubectl taint nodes <node-name> node-role.kubernetes.io/control-plane:NoSchedule-
+
+# installing flannel
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+# update again
+sudo apt update && sudo apt upgrade -y
+
 # adding nodes
 sudo kubeadm join 10.0.173.84:6443 --token luyqe4.fq8iqs6bl61fzfdf \
 	--discovery-token-ca-cert-hash sha256:8a5accadb2d4283f5542f0a4021e2260b46b309fa15bfaff0992dcf2e34f4bb0
