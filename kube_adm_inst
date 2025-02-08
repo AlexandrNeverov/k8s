@@ -1,2 +1,119 @@
+# https://www.youtube.com/watch?v=Vw0c3ZaR9uI
+# https://github.com/evsq/devopsnatroechku/blob/main/kubeadm-k8s1.30.sh
+
 # updating Ubuntu and installing net-tools and tree
+sudo apt update && sudo apt install -y net-tools tree
+
+# we can install Docker (if it is necessary)
+sudo apt install docker.io 
+
+# updating Ubuntu again and installing certificates
+
+sudo apt update
+# install the tool that we wil use for apt-reposotories (that needs https)
+sudo apt install apt-transport-https
+# install certificates
+sudo apt install ca-certificates
+# install curl (for taking information from URL
+sudo apt install curl
+# crypto-key tolls
+sudo apt install curl gpg
+
+# we can use one-line command: sudo apt update && sudo apt install -y apt-transport-https ca-certificates curl gpg
+
+# making a folder for keys (for accessing to k8s-repository)
+sudo mkdir -p -m 755 /etc/apt/keyrings
+
+# getting a certificate and dave it to a bin-file
+curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+# taking to the apt-repo
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+# installing k8s
+
+# updating 
+sudo apt update
+
+# upgrading
+sudo apt upgrade
+
+# installing k8s
+sudo apt install -y kubelet kubeadm kubectl containerd
+
+# disabling swamp 
+sudo swapoff -a 
+
+#holding k8s updating
+udo apt-mark hold kubelet kubeadm kubectl
+
+# we can use one-line command: sudo apt update && sudo apt upgrade -y && sudo apt install -y kubelet kubeadm kubectl containerd && sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl
+
+# activation net-module
+
+# switch on root
+sudo -i
+
+# switch modules
+modprobe br_netfilter
+modprobe overlay
+
+# enavle net-traffic:
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+sysctl -p /etc/sysctl.conf
+
+# return to user
+
+# in v1.22 and later, if the user does not set the cgroupDriver field under KubeletConfiguration, kubeadm defaults it to systemd.
+# by default containerd set SystemdCgroup = false, so you need to activate SystemdCgroup = true, put it in /etc/containerd/config.toml
+
+sudo mkdir /etc/containerd/
+sudo nano /etc/containerd/config.toml
+
+version = 2
+[plugins]
+  [plugins."io.containerd.grpc.v1.cri"]
+   [plugins."io.containerd.grpc.v1.cri".containerd]
+      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+            SystemdCgroup = true
+
+sudo systemctl restart containerd
+
+# update again
+sudo apt update
+
+# get ip
+ip a
+
+# initiation a cluster
+sudo kubeadm init \
+  --apiserver-advertise-address=10.0.173.84 \
+  --pod-network-cidr 10.244.0.0/16 \
+  --apiserver-cert-extra-sans=54.147.14.225
+
+# set up a config
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# adding nodes
+sudo kubeadm join 10.0.173.84:6443 --token luyqe4.fq8iqs6bl61fzfdf \
+	--discovery-token-ca-cert-hash sha256:8a5accadb2d4283f5542f0a4021e2260b46b309fa15bfaff0992dcf2e34f4bb0
+
+
+
+
+
+
+
+
+
+
+
+
+
 
