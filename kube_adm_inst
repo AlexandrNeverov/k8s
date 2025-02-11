@@ -145,7 +145,7 @@ sudo mkdir -p /home/.kube/manifests && cd /home/.kube/manifests && sudo touch da
 sudo sudo touch dashboard-node-port.yaml && sudo nano dashboard-node-port.yaml (and copy this: https://github.com/AlexandrNeverov/k8s/blob/main/node_port.yaml)
 
 # making a TLS/SSL certificate
-sudo mkdir -p /etc/kubernetes/certificates/dashboard && sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/kubernetes/certificates/dashboard/dashboard.key -out /etc/kubernetes/certificates/dashboard/dashboard.crt
+sudo mkdir -p /etc/ssl/certs/ && sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/ssl/certs/dashboard.key -out /etc/ssl/certs/dashboard.crt
 
 # checking
 sudo kubectl get pods -n kubernetes-dashboard
@@ -175,6 +175,7 @@ sudo kubectl create secret tls kubernetes-dashboard-certs \
   --cert=/etc/ssl/certs/dashboard.crt \
   --key=/etc/ssl/certs/dashboard.key \
   -n kubernetes-dashboard
+
   - --tls-cert-file=/etc/ssl/certs/dashboard.crt
   - --tls-key-file=/etc/ssl/certs/dashboard.key
 
