@@ -27,7 +27,7 @@ kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
 kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
 apt update && apt upgrade -y && \
-sleep 40 && \
+sleep 60 && \
 kubectl get pods -A'
 
 
