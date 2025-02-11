@@ -39,9 +39,9 @@ version = 2
 sudo systemctl restart containerd && \
 sudo apt update && \
 sudo kubeadm init \
-  --apiserver-advertise-address=10.0.23.130 \
+  --apiserver-advertise-address=10.0.69.56 \
   --pod-network-cidr 10.244.0.0/16 \
-  --apiserver-cert-extra-sans=18.234.209.132
+  --apiserver-cert-extra-sans=54.90.80.48
 
 
 # https://www.youtube.com/watch?v=Vw0c3ZaR9uI
@@ -235,6 +235,8 @@ sudo kubectl get pods && sudo kubectl get pods -n kubernetes-dashboard
 sudo kubectl apply -f dashboard-deployment.yaml && sudo kubectl apply -f node_port.yaml
 
 # adding nodes
+Your Kubernetes control-plane has initialized successfully!
+
 To start using your cluster, you need to run the following as a regular user:
 
   mkdir -p $HOME/.kube
@@ -251,6 +253,6 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 
 Then you can join any number of worker nodes by running the following on each as root:
 
-kubeadm join 10.0.156.97:6443 --token z58cls.lfknjd3pqya7ttin \
-        --discovery-token-ca-cert-hash sha256:c0edc5f64e09d3786066f9b1a60161c2ae19e69507ed74a1a4c46e540c14de39 
+kubeadm join 10.0.69.56:6443 --token 9lndfe.9ee08hsxlqq2p0p9 \
+	--discovery-token-ca-cert-hash sha256:819d2d886cecda336b3a8032fe01fee88c1b4b7df5e4ced52bc0878fc5149bfc
 
