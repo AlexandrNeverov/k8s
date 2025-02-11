@@ -20,7 +20,7 @@ kubeadm init \
   --apiserver-advertise-address=10.0.77.88 \
   --pod-network-cidr=10.244.0.0/16 \
   --apiserver-cert-extra-sans=107.21.85.77 && \
-mkdir -p $HOME/.kube && \
+mkdir -p /home/.kube && \
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
 chown $(id -u):$(id -g) $HOME/.kube/config && \
 kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
@@ -28,7 +28,15 @@ kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
 apt update && apt upgrade -y && \
 sleep 60 && \
-kubectl get pods -A'
+kubectl get pods -A && \
+mkdir -p /home/.kube/dashbord && \
+touch /home/.kube/dashbord/dashboard-deployment.yaml && \
+touch /home/.kube/dashbord/node-port.yaml && \
+curl cat https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/.kube/dashbord/dashboard-deployment.yaml && \
+curl https://rhttps://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/.kube/dashbord/node-port.yaml && \
+kubectl apply -f /home/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f /home/.kube/dashbord/node-port.yaml && \
+sleep 30 && \
+kubectl get pods -n kubernetes-dashboard'
 
 
 # https://www.youtube.com/watch?v=Vw0c3ZaR9uI
