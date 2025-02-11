@@ -1,30 +1,25 @@
 # S1
-sudo -с 'timedatectl set-timezone America/New_York && \
+sudo bash -c 'timedatectl set-timezone America/New_York && \
 apt update && \
 apt install -y chrony net-tools tree openssl apt-transport-https ca-certificates curl gpg && \
 netstat --version && openssl version && tree --version && apt show apt-transport-https && apt show ca-certificates && \
 curl --version && \
 mkdir -p -m 755 /etc/apt/keyrings && \
 curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list && \
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
 apt update && apt upgrade -y && \
 apt install -y kubelet kubeadm kubectl containerd && \
-swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl && \
-systemctl enable chrony && sudo systemctl start chrony && \
-apt update && apt upgrade -y'
-
-$ S2
-sudo bash -c 'modprobe br_netfilter && modprobe overlay && echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf && sysctl -p /etc/sysctl.conf && \
-touch -p /etc/containerd/config.toml && curl cat https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && cat /etc/containerd/config.toml'
-
-# S3
-
-sudo -c 'systemctl restart containerd && \
-apt update && \
+swapoff -a && apt-mark hold kubelet kubeadm kubectl && \
+systemctl enable chrony && systemctl start chrony && \
+apt update && apt upgrade -y && \
+modprobe br_netfilter && modprobe overlay && echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && echo \
+"net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf && sysctl -p /etc/sysctl.conf && mkdir -p /etc/containerd && touch /etc/containerd/config.toml && \
+curl -SL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && cat /etc/containerd/config.toml && \
+systemctl restart containerd && \
 kubeadm init \
-  --apiserver-advertise-address=10.0.69.56 \
-  --pod-network-cidr 10.244.0.0/16 \
-  --apiserver-cert-extra-sans=54.90.80.48 \
+  --apiserver-advertise-address=10.0.77.88 \
+  --pod-network-cidr=10.244.0.0/16 \
+  --apiserver-cert-extra-sans=107.21.85.77 && \
 mkdir -p $HOME/.kube && \
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
 chown $(id -u):$(id -g) $HOME/.kube/config && \
@@ -32,8 +27,9 @@ kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
 kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
 apt update && apt upgrade -y && \
-kubectl get pods -n kube-flanne && \
-kubectl get pods -A && \ kubectl get pods -n kubernetes-dashboard'
+kubectl get pods -n kube-flannel && \
+kubectl get pods -A && \
+kubectl get pods -n kubernetes-dashboard'
 
 
 # https://www.youtube.com/watch?v=Vw0c3ZaR9uI
