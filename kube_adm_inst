@@ -1,29 +1,74 @@
+# S1
+sudo sudo timedatectl set-timezone America/New_York && \
+sudo apt update && \
+sudo apt install -y chrony net-tools tree openssl apt-transport-https ca-certificates curl gpg && \
+sudo netstat --version && sudo openssl version && sudo tree --version && sudo apt show apt-transport-https && sudo apt show ca-certificates && \
+sudo curl --version && sudo --version && \
+sudo mkdir -p -m 755 /etc/apt/keyrings && \
+curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+sudo apt update && sudo apt upgrade -y && \
+sudo apt install -y kubelet kubeadm kubectl containerd && \
+sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl && \
+sudo systemctl enable chrony && sudo systemctl start chrony && \
+sudo apt update && sudo apt upgrade -y
+
+$ S2
+sudo -i 
+modprobe br_netfilter 
+modprobe overlay 
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf 
+echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf 
+sysctl -p /etc/sysctl.conf 
+exit
+
+sudo mkdir /etc/containerd/ && sudo nano /etc/containerd/config.toml
+
+version = 2
+[plugins]
+  [plugins."io.containerd.grpc.v1.cri"]
+   [plugins."io.containerd.grpc.v1.cri".containerd]
+      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+            SystemdCgroup = true
+
+# S4
+
+sudo systemctl restart containerd && \
+sudo apt update && \
+sudo kubeadm init \
+  --apiserver-advertise-address=10.0.23.130 \
+  --pod-network-cidr 10.244.0.0/16 \
+  --apiserver-cert-extra-sans=18.234.209.132
+
+
 # https://www.youtube.com/watch?v=Vw0c3ZaR9uI
 # https://github.com/evsq/devopsnatroechku/blob/main/kubeadm-k8s1.30.sh
 
-# updating Ubuntu and installing net-tools and tree
-sudo apt update && sudo apt install -y net-tools tree 
-
 # we can install Docker (if it is necessary)
-sudo apt install docker.io 
+sudo apt update && sudo apt install docker.io 
+
+# updating Ubuntu and installing net-tools and tree
+sudo apt update && sudo apt install -y net-tools tree openssl 
+sudo netstat --version && sudo openssl version && sudo tree --version
 
 # updating Ubuntu again and installing certificates
-
 sudo apt update
+
 # install the tool that we wil use for apt-reposotories (that needs https)
 sudo apt install apt-transport-https
 # install certificates
 sudo apt install ca-certificates
-# install curl (for taking information from URL
+# install curl (for taking information from URL)
 sudo apt install curl
-# crypto-key tools
-sudo apt install gpg
-# CertBot - for getting SSL/TLS cetrificates
-sudo apt install certbot
-# OpenSSL - for making own certificate
-sudo apt install openssl
 
-# we can use one-line command: sudo apt update && sudo apt install -y apt-transport-https ca-certificates curl gpg certbot openssl
+# !S1 we can use one-line command!: 
+sudo apt update && \
+sudo apt install -y net-tools tree openssl apt-transport-https ca-certificates curl gpg && \
+sudo netstat --version && sudo openssl version && sudo tree --version && sudo apt show apt-transport-https && sudo apt show ca-certificates && \
+sudo curl --version && sudo --version
 
 # making a folder for keys (for accessing to k8s-repository)
 sudo mkdir -p -m 755 /etc/apt/keyrings
@@ -32,6 +77,11 @@ sudo mkdir -p -m 755 /etc/apt/keyrings
 curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # taking to the apt-repo
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+# !S2 we can use one-line command!: 
+sudo mkdir -p -m 755 /etc/apt/keyrings && \
+curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # installing k8s
@@ -49,9 +99,12 @@ sudo apt install -y kubelet kubeadm kubectl containerd
 sudo swapoff -a 
 
 #holding k8s updating
-udo apt-mark hold kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
 
-# we can use one-line command: sudo apt update && sudo apt upgrade -y && sudo apt install -y kubelet kubeadm kubectl containerd && sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl
+# !S3 we can use one-line command!: 
+sudo apt update && sudo apt upgrade -y && /\
+sudo apt install -y kubelet kubeadm kubectl containerd && \
+sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl
 
 # activation net-module
 
@@ -62,18 +115,26 @@ sudo -i
 modprobe br_netfilter
 modprobe overlay
 
-# enavle net-traffic:
+# enable net-traffic:
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
 sysctl -p /etc/sysctl.conf
 
 # return to user
 
+# !S4 we can use one-line command!: 
+sudo -i && \ 
+modprobe br_netfilter && \ 
+modprobe overlay && \
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && \
+echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf && \
+sysctl -p /etc/sysctl.conf && \
+exit
+
 # in v1.22 and later, if the user does not set the cgroupDriver field under KubeletConfiguration, kubeadm defaults it to systemd.
 # by default containerd set SystemdCgroup = false, so you need to activate SystemdCgroup = true, put it in /etc/containerd/config.toml
 
-sudo mkdir /etc/containerd/
-sudo nano /etc/containerd/config.toml
+sudo mkdir /etc/containerd/ && sudo nano /etc/containerd/config.toml
 
 version = 2
 [plugins]
@@ -85,7 +146,13 @@ version = 2
           [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
             SystemdCgroup = true
 
-sudo systemctl restart containerd
+
+sudo systemctl restart containerd && \
+sudo apt update && \
+sudo kubeadm init \
+  --apiserver-advertise-address=10.0.173.84 \
+  --pod-network-cidr 10.0.72.101/16 \
+  --apiserver-cert-extra-sans=54.235.49.37
 
 # update again
 sudo apt update
@@ -96,8 +163,8 @@ ip a
 # initiation a cluster
 sudo kubeadm init \
   --apiserver-advertise-address=10.0.173.84 \
-  --pod-network-cidr 10.244.0.0/16 \
-  --apiserver-cert-extra-sans=54.147.14.225
+  --pod-network-cidr 10.0.72.101/16 \
+  --apiserver-cert-extra-sans=54.235.49.37
 
 # set up a config
 mkdir -p $HOME/.kube
@@ -119,7 +186,7 @@ sudo kubectl get nodes
 sudo kubectl describe nodes
 
 # observing the pods
-kubectl get pods -n kube-system
+sudo kubectl get pods -n kube-system
 
 # to skip node.kubernetes.io/not-ready:NoSchedule
 sudo kubectl taint nodes <node-name> node.kubernetes.io/not-ready:NoSchedule-
@@ -132,12 +199,15 @@ sudo kubectl get nodes
 
 # installing flannel
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl delete -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+sudo kubectl get pods -n kube-flannel
 
 # update again
 sudo apt update && sudo apt upgrade -y
 
 # observing the nodes
 sudo kubectl get nodes
+sudo kubectl get pods -n kube-system
 
 # Install Dashboard
 
@@ -150,6 +220,7 @@ sudo mkdir -p /etc/ssl/certs/ && sudo openssl req -new -newkey rsa:2048 -days 36
 
 # making the secrets
 
+sudo kubectl create namespace kubernetes-dashboard
 sudo kubectl create secret tls kubernetes-dashboard-certs \
   --cert=/etc/ssl/certs/dashboard.crt \
   --key=/etc/ssl/certs/dashboard.key \
@@ -164,5 +235,22 @@ sudo kubectl get pods && sudo kubectl get pods -n kubernetes-dashboard
 sudo kubectl apply -f dashboard-deployment.yaml && sudo kubectl apply -f node_port.yaml
 
 # adding nodes
-sudo kubeadm join 10.0.173.84:6443 --token luyqe4.fq8iqs6bl61fzfdf \
-	--discovery-token-ca-cert-hash sha256:8a5accadb2d4283f5542f0a4021e2260b46b309fa15bfaff0992dcf2e34f4bb0
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.0.156.97:6443 --token z58cls.lfknjd3pqya7ttin \
+        --discovery-token-ca-cert-hash sha256:c0edc5f64e09d3786066f9b1a60161c2ae19e69507ed74a1a4c46e540c14de39 
+
