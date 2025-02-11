@@ -140,34 +140,13 @@ sudo apt update && sudo apt upgrade -y
 sudo kubectl get nodes
 
 # Install Dashboard
+
 # Make manifets
 sudo mkdir -p /home/.kube/manifests && cd /home/.kube/manifests && sudo touch dashboard-deployment.yaml && sudo nano dashboard-deployment.yaml (and copy this: https://github.com/AlexandrNeverov/k8s/blob/main/dashboard_deployment.yaml)
 sudo sudo touch dashboard-node-port.yaml && sudo nano dashboard-node-port.yaml (and copy this: https://github.com/AlexandrNeverov/k8s/blob/main/node_port.yaml)
 
 # making a TLS/SSL certificate
 sudo mkdir -p /etc/ssl/certs/ && sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/ssl/certs/dashboard.key -out /etc/ssl/certs/dashboard.crt
-
-# checking
-sudo kubectl get pods -n kubernetes-dashboard
-
-# apply manifest
-sudo kubectl apply -f dashboard-nodeport.yaml
-
-
-# find dachboards pods among all pods
-sudo kubectl get pods --all-namespaces
-
-# define dachboards pods
-sudo kubectl get pods -n kubernetes-dashboard
-
-# find a downloaded manifest
-sudo kubectl get deployment kubernetes-dashboard -n kubernetes-dashboard -o yaml
-
-# we can edit it
-sudo kubectl edit deployment kubernetes-dashboard -n kubernetes-dashboard
-
-# bit it will be better to download it to the local folder (under the root user)n
-sudo kubectl get deployment kubernetes-dashboard -n kubernetes-dashboard -o yaml > /etc/kubernetes/manifests/dashboard-deployment.yaml
 
 # making the secrets
 
@@ -176,12 +155,13 @@ sudo kubectl create secret tls kubernetes-dashboard-certs \
   --key=/etc/ssl/certs/dashboard.key \
   -n kubernetes-dashboard
 
-  - --tls-cert-file=/etc/ssl/certs/dashboard.crt
-  - --tls-key-file=/etc/ssl/certs/dashboard.key
+# update again
+sudo apt update && sudo apt upgrade -y
 
+# check dachboards pods
+sudo kubectl get pods && sudo kubectl get pods -n kubernetes-dashboard
 
-sudo kubectl apply -f dashboard-deployment_.yaml
-
+sudo kubectl apply -f dashboard-deployment.yaml && sudo kubectl apply -f node_port.yaml
 
 # adding nodes
 sudo kubeadm join 10.0.173.84:6443 --token luyqe4.fq8iqs6bl61fzfdf \
