@@ -1,41 +1,39 @@
 # S1
-sudo sudo timedatectl set-timezone America/New_York && \
-sudo apt update && \
-sudo apt install -y chrony net-tools tree openssl apt-transport-https ca-certificates curl gpg && \
-sudo netstat --version && sudo openssl version && sudo tree --version && sudo apt show apt-transport-https && sudo apt show ca-certificates && \
-sudo curl --version && sudo --version && \
-sudo mkdir -p -m 755 /etc/apt/keyrings && \
-curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
-sudo apt update && sudo apt upgrade -y && \
-sudo apt install -y kubelet kubeadm kubectl containerd && \
-sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl && \
-sudo systemctl enable chrony && sudo systemctl start chrony && \
-sudo apt update && sudo apt upgrade -y
+sudo -с 'timedatectl set-timezone America/New_York && \
+apt update && \
+apt install -y chrony net-tools tree openssl apt-transport-https ca-certificates curl gpg && \
+netstat --version && openssl version && tree --version && apt show apt-transport-https && apt show ca-certificates && \
+curl --version && \
+mkdir -p -m 755 /etc/apt/keyrings && \
+curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list && \
+apt update && apt upgrade -y && \
+apt install -y kubelet kubeadm kubectl containerd && \
+swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl && \
+systemctl enable chrony && sudo systemctl start chrony && \
+apt update && apt upgrade -y'
 
 $ S2
-sudo bash -c 'modprobe br_netfilter && modprobe overlay && echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf && sysctl -p /etc/sysctl.conf'
+sudo bash -c 'modprobe br_netfilter && modprobe overlay && echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf && sysctl -p /etc/sysctl.conf && \
+touch -p /etc/containerd/config.toml && curl cat https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && cat /etc/containerd/config.toml'
 
-sudo mkdir /etc/containerd/ && sudo nano /etc/containerd/config.toml
+# S3
 
-version = 2
-[plugins]
-  [plugins."io.containerd.grpc.v1.cri"]
-   [plugins."io.containerd.grpc.v1.cri".containerd]
-      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
-        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
-          runtime_type = "io.containerd.runc.v2"
-          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
-            SystemdCgroup = true
-
-# S4
-
-sudo systemctl restart containerd && \
-sudo apt update && \
-sudo kubeadm init \
+sudo -c 'systemctl restart containerd && \
+apt update && \
+kubeadm init \
   --apiserver-advertise-address=10.0.69.56 \
   --pod-network-cidr 10.244.0.0/16 \
-  --apiserver-cert-extra-sans=54.90.80.48
+  --apiserver-cert-extra-sans=54.90.80.48 \
+mkdir -p $HOME/.kube && \
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
+chown $(id -u):$(id -g) $HOME/.kube/config && \
+kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
+kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
+apt update && apt upgrade -y && \
+kubectl get pods -n kube-flanne && \
+kubectl get pods -A && \ kubectl get pods -n kubernetes-dashboard'
 
 
 # https://www.youtube.com/watch?v=Vw0c3ZaR9uI
@@ -224,7 +222,7 @@ sudo kubectl create secret tls kubernetes-dashboard-certs \
 sudo apt update && sudo apt upgrade -y
 
 # check dachboards pods
-sudo kubectl get pods && sudo kubectl get pods -n kubernetes-dashboard
+sudo kubectl get pods -A && sudo kubectl get pods -n kubernetes-dashboard
 
 sudo kubectl apply -f dashboard-deployment.yaml && sudo kubectl apply -f node_port.yaml
 
