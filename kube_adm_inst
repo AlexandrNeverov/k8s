@@ -139,9 +139,10 @@ sudo apt update && sudo apt upgrade -y
 # observing the nodes
 sudo kubectl get nodes
 
-# installinf Dashboard
-sudo mkdir -p /home/.kube/manifests && cd /home/.kube/manifests && sudo touch dashboard-deployment.yaml && sudo nano dashboard-deployment.yaml # (and copy this)
-
+# Install Dashboard
+# Make manifets
+sudo mkdir -p /home/.kube/manifests && cd /home/.kube/manifests && sudo touch dashboard-deployment.yaml && sudo nano dashboard-deployment.yaml (and copy this: https://github.com/AlexandrNeverov/k8s/blob/main/dashboard_deployment.yaml)
+sudo sudo touch dashboard-node-port.yaml && sudo nano dashboard-node-port.yaml (and copy this: https://github.com/AlexandrNeverov/k8s/blob/main/dashboard_deployment.yaml)
 
 # making manifest (/etc/kubernetes/manifests/dashboard-nodeport.yaml)
 apiVersion: v1
