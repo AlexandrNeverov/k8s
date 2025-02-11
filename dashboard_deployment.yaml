@@ -52,10 +52,7 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard-certs
   namespace: kubernetes-dashboard
-type: kubernetes.io/tls
-data:
-  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR5VENDQXJHZ0F3SUJBZ0lVRzdNSk9pT0k1d25QVWJYSWwvdXdqSFk2SU5nd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2RERUxNQWtHQTFVRUJoTUNWVk14Q3pBSkJnTlZCQWdNQWtaTU1Rc3dDUVlEVlFRSERBSklRakVMTUFrRwpBMVVFQ2d3Q1IxSXhDekFKQmdOVkJBc01Ba1JQTVFzd0NRWURWUVFEREFKQlZqRWtNQ0lHQ1NxR1NJYjNEUUVKCkFSWVZibVYyTG1Gc0xuWnBZekZBWjIxaGFXd3VZMjl0TUI0WERUSTFNREl4TVRBMk1qY3pNVm9YRFRJMk1ESXgKTVRBMk1qY3pNVm93ZERFTE1Ba0dBMVVFQmhNQ1ZWTXhDekFKQmdOVkJBZ01Ba1pNTVFzd0NRWURWUVFIREFKSQpRakVMTUFrR0ExVUVDZ3dDUjFJeEN6QUpCZ05WQkFzTUFrUlBNUXN3Q1FZRFZRUUREQUpCVmpFa01DSUdDU3FHClNJYjNEUUVKQVJZVmJtVjJMbUZzTG5acFl6RkFaMjFoYVd3dVkyOXRNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUYKQUFPQ0FROEFNSUlCQ2dLQ0FRRUFzZHN0WGZEd3BwNzJ1WkladUZoTjdDWTNROFQ1TlRTdlFFYy9kUDh2Q0dTdAprQVZWTjNLaXlSY010S3dSZHRHWlpaZHpsWFFjcytwYk1OZnlJY0Q3aGhoQ2t0V1A0aTFtM3RYcTdLeE12MWFhCmk5K2k0UEdOUzVFdk01K3M1elRNbGd1WXB2VDlQOXV1TjBSaitYYzVaR1doOTFLUkQwZzRtQVlqYWZHTkxnUnMKYkF4OXY1VXhPaVFLa3pNQ3hCdjdzenZpR29sUXpoOUl2NExIa1NoekNOKy9zSEVwR2twMmluMndHV0NBQmswcgpobmlnU0EwVkNvZDlpcG96aGtWK0JnZDFKaTBxMEJPR0JRWm5zRWI3bVhmSjZGdVB4UmIrQXhuTVdMelBkQU1DCnFRcDZ6d2tVNEZvZmpGRGQ0QW1nbmlObkZ5Umt1MWpRZmRVSS80WXMvd0lEQVFBQm8xTXdVVEFkQmdOVkhRNEUKRmdRVUM3bk9IeE5zYmpWVlRqMXhyZFJEQkY2cHM4OHdId1lEVlIwakJCZ3dGb0FVQzduT0h4TnNialZWVGoxeApyZFJEQkY2cHM4OHdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFBWVU0CkFPTjRBbm85S0hWd1dySGhFWVoxM1V3VU53QkwxQlBWT09NN3RVeTJZRzd2dE9KK3orYnI4aDVKdkRKZzhXT3AKUm05U2E0ZjJraDg4bE1UWGM5NXdkdTZXeStlU3RrRmhBOFVEQ2E4b2pMVSsxaFBkNnUrVW5rTDdFd2ltS0pFVAp6Q3g2VjZvQmlrTy9IOHAzUU1hRmdFNCt3L1k1RzliQmhUREJRZTY3cENydUMvMmZnb2RJVm9FWGk5KzBMei9RCnFvMldnQkt2NVhIRUg3V3lsZGJHTTJDQUh6ZjFML1JCNEtnbkhiSEU1RG85YnFQS1pLM081ZGJGTlp0QXMraEQKZWQzK01QQTB5UHlmNHVDaG1OdjA4WTlQNmRtdlVRT0JFRTFaZCtHak5nK2RSYTJHVGJSRGRRc3FxRmtVbDlBLwo3bUlOT21aRG52bHpnZFQrR2c9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
-  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRQ3gyeTFkOFBDbW52YTUKa2htNFdFM3NKamREeFBrMU5LOUFSejkwL3k4SVpLMlFCVlUzY3FMSkZ3eTByQkYyMFpsbGwzT1ZkQnl6NmxzdwoxL0lod1B1R0dFS1MxWS9pTFdiZTFlcnNyRXkvVnBxTDM2TGc4WTFMa1M4em42em5OTXlXQzVpbTlQMC8yNjQzClJHUDVkemxrWmFIM1VwRVBTRGlZQmlOcDhZMHVCR3hzREgyL2xURTZKQXFUTXdMRUcvdXpPK0lhaVZET0gwaS8KZ3NlUktITUkzNyt3Y1NrYVNuYUtmYkFaWUlBR1RTdUdlS0JJRFJVS2gzMkttak9HUlg0R0IzVW1MU3JRRTRZRgpCbWV3UnZ1WmQ4bm9XNC9GRnY0REdjeFl2TTkwQXdLcENuclBDUlRnV2grTVVOM2dDYUNlSTJjWEpHUzdXTkI5CjFRai9oaXovQWdNQkFBRUNnZ0VBTWh1dURHbDFZM3dseHVLQ25JMUVadVBkYmhwd202emNNeC9mb1BiRUtYa3oKN1ArVG9xdUpjVjR0Rmpua01iV2JvaU9wVE5JSnhDYWl5b0FNbDdYbkowQnVnUy9wK2E4UTdIY1lXTld5U2JYOApsS3ZORjlMMkcvUXJlRC9rVnI5cFpGeWdCV25BYjkxVWwvMk1yUndKNzE4eTRwdEFneTIxeEI3Mm0wS1NwQVBpCkNtckNDcytaVmdIQkR0NkZFaElFYXNIYlN6QW9SYzhTMmcvdEw3cVRscTZTV1JYV0F0UlBaZHNPQi9EbDU4cGkKVnd0Q2JFblRTYzhtNDZOSDVPeXRYZjFmaDk3bWNmOEtSRkx3Yk91RVdMUVhxSW1wSHYwVFc0Y3dteHRZaGkrOAozTUpIUTNMR1RrYnJvSkQ1V09uemlidi9VZ0E5c3dSbDlxaUNWTzgrQVFLQmdRRHVyL1NjQ1lOZnR3N24yeEdQCk5FMUVnVDlSc2syd0xFcWF5R01KNzhuWXBCRUdWN2RvdGNQQkptbG9sSE9pNDlHTWE5czJSYjFWbGhJVlFoZkoKd1dPVHAwNjhvTjdjMHRmNGpmNmd4dlhYOFBkaTEyNXpFZjRuWE1ZT1RTQ1dXYTA3NnFCMFUxUDU4cUFiTXp4RQpCcFBXZEViSGc2RHR6aUhKYVZXU2lHU1hLUUtCZ1FDK3dhOEFlQ2VBUGUvOXFmQmU3RGNjWmM4NXRiZVdINEt6Cm16NnlpeFFGRkhqNFBmM2VPSFdZb2d4MkVFRDRUTm1LTzBJYm1Jd1g2dUxEYTJzdXBZcENFZEVvUVFCMmtxeTkKeDEvSHpQcGlLR0p6RjVBanJhL2dnMW82cjVxZXJ0bnk4QjRaN08xUkN0TmtFK29YdDBCZ1M4OHdCUm1uQlNUdgpNTEZBWDE5djV3S0JnRjRZWjZvTDVncVpzL3FiVmpUS1BadkFDQ0pBMUhlYlBsMyttV3lWWjFGTWZKbXZndEo0CnRZOHpnV0tGQTRFM3BxaGc3SzVjbCtOaG9nZFhZdUZhcDlMUnBpeWVqcjBuTVpUL0JWNkVrTzVzUkZwbTYxZloKeEFQb2d2dW9WQ3h4ZGVXay9WUmVkVUNYOFo1SGVINm95U2RGOTVFM3h2MTR3Y0VSRVhjTzVmamhBb0dBRXhPWApocnA5YU12STVsdEtXSlBTNXhvZllTd1ZFZ1JRczltQXFhWlMrRGNWNmUxNUovSUpnSndrRnVLRlBNK2lxYnBICllDOGZRMzBQOUc4WHB2Q1RKUXhYR0dsM3ZHUHF0b2Zyd2pWempNRnhKd1ZpT3M4eDJZZ0pTL2tudzFyRkhSQjYKVWlscGlrTkU1S3RCSytIOXBDT3dzcUt2OEE0SnBZbi9EK3I1eGwwQ2dZRUE1Y2R3UVhMRHFtb0daZlhrdUZoZgp0Rm9KVnl4UE1tZ1Jwbyt5cmZXYUZlVlBPaEd5SWJ2dE5vc1VlSU13S24zZzJmZzVrdVlGdXM4VGFlUzdzN2h1CjZpWEJvY0lEeW1iT0g5NURDdDdKRnZ2M1FRSVpRWWxJZlJteGE0V04va2VjMzBUclJlWlZSTlA4eDJ6UitZSC8KdkdRcytyQ1YvQXBvL2owcVhJNTlLMk09Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+type: Opaque
 
 ---
 
@@ -193,23 +190,21 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.5.0
+          image: kubernetesui/dashboard:v2.7.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
               protocol: TCP
           args:
-            - --auto-generate-certificates=false
+            - --auto-generate-certificates
             - --namespace=kubernetes-dashboard
-            - --tls-cert-file=/etc/ssl/certs/dashboard.crt
-            - --tls-key-file=/etc/ssl/certs/dashboard.key
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
             # to it. Uncomment only if the default does not work.
             # - --apiserver-host=http://my-address:port
           volumeMounts:
             - name: kubernetes-dashboard-certs
-              mountPath: /etc/ssl/certs
+              mountPath: /certs
               # Create on-disk volume to store exec logs
             - mountPath: /tmp
               name: tmp-volume
@@ -280,7 +275,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: dashboard-metrics-scraper
-          image: kubernetesui/metrics-scraper:v1.0.7
+          image: kubernetesui/metrics-scraper:v1.0.8
           ports:
             - containerPort: 8000
               protocol: TCP
