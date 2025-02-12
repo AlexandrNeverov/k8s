@@ -1,80 +1,82 @@
-sudo bash -c 'apt update && apt install -y apt-transport-https ca-certificates curl gpg' && \
+sudo bash -c 'apt update && apt install -y apt-transport-https ca-certificates curl gpg && \
 
-sudo mkdir -p -m 755 /etc/apt/keyrings && \
-sudo curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-sudo echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+mkdir -p -m 755 /etc/apt/keyrings && \
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
 
-sudo apt update && sudo apt install -y kubelet kubeadm kubectl containerd && \
-sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl && \
-sudo apt update && sudo apt upgrade -y && \
+apt update && apt install -y kubelet kubeadm kubectl containerd && \
+swapoff -a && apt-mark hold kubelet kubeadm kubectl && \
+apt update && apt upgrade -y && \
 
-sudo modprobe br_netfilter && sudo modprobe overlay && \
-echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf && \
-echo "net.bridge.bridge-nf-call-iptables=1" | sudo tee -a /etc/sysctl.conf && \
-sudo sysctl -p /etc/sysctl.conf && \
-sudo mkdir -p /etc/containerd && sudo touch /etc/containerd/config.toml && \
-sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml' && \
-sudo cat /etc/containerd/config.toml && \
-sudo systemctl restart containerd && \
+modprobe br_netfilter && modprobe overlay && \
+echo "net.ipv4.ip_forward=1" | tee -a /etc/sysctl.conf && \
+echo "net.bridge.bridge-nf-call-iptables=1" | tee -a /etc/sysctl.conf && \
+sysctl -p /etc/sysctl.conf && \
+mkdir -p /etc/containerd && touch /etc/containerd/config.toml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && \
+cat /etc/containerd/config.toml && \
+systemctl restart containerd && \
 
-sudo kubeadm init \
+kubeadm init \
   --apiserver-advertise-address=$(hostname -I | awk "{print $1}") \
   --pod-network-cidr=10.244.0.0/16 \
   --apiserver-cert-extra-sans=$(curl -s ifconfig.me; echo) && \
 
-sudo mkdir -p $HOME/.kube && \
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
-sudo chown $(id -u):$(id -g) $HOME/.kube/ && \
+mkdir -p $HOME/.kube && \
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
+chown $(id -u):$(id -g) $HOME/.kube/ && \
 
-sudo mkdir -p /root/.kube && \
-sudo cp ~/.kube/config /root/.kube/config && \
+mkdir -p /root/.kube && \
+cp ~/.kube/config /root/.kube/config && \
 
-sudo kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
-sudo kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
+kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
+kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
 
-sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
 
-sudo apt update && sudo apt upgrade -y && \
-
-sleep 30 && \
-
-sudo kubectl get pods -A && \
-
-sudo mkdir -p $HOME/.kube/dashbord && \
-sudo chown $(id -u):$(id -g) $HOME/.kube/dashbord
-sudo curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > $HOME/.kube/dashbord/dashboard-deployment.yaml && \
-sudo curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > $HOME/.kube/dashbord/node-port.yaml && \
-
-sudo kubectl apply -f $HOME/.kube/dashbord/dashboard-deployment.yaml && \
-sudo kubectl apply -f $HOME/.kube/dashbord/node-port.yaml && \
+apt update && sudo apt upgrade -y && \
 
 sleep 30 && \
 
-sudo kubectl get pods -n kubernetes-dashboard && \
-sudo touch $HOME/.kube/dashbord/d_token && sudo chown $(id -u):$(id -g) $HOME/.kube/dashbord/d_token && \
-sudo touch $HOME/.kube/dashbord/c_token && sudo chown $(id -u):$(id -g) $HOME/.kube/dashbord/c_token && \
+kubectl get pods -A && \
 
-sudo kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
-sudo kubectl create clusterrolebinding admin-user-binding \
+mkdir -p $HOME/.kube/dashbord && \
+chown $(id -u):$(id -g) $HOME/.kube/dashbord
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > $HOME/.kube/dashbord/dashboard-deployment.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > $HOME/.kube/dashbord/node-port.yaml && \
+chown $(id -u):$(id -g) $HOME/.kube/dashbord/dashboard-deployment.yaml
+chown $(id -u):$(id -g) $HOME/.kube/dashbord/node-port.yaml
+
+kubectl apply -f $HOME/.kube/dashbord/dashboard-deployment.yaml && \
+kubectl apply -f $HOME/.kube/dashbord/node-port.yaml && \
+
+sleep 30 && \
+
+kubectl get pods -n kubernetes-dashboard && \
+touch $HOME/.kube/dashbord/d_token && chown $(id -u):$(id -g) $HOME/.kube/dashbord/d_token && \
+touch $HOME/.kube/dashbord/c_token && chown $(id -u):$(id -g) $HOME/.kube/dashbord/c_token && \
+
+kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
+kubectl create clusterrolebinding admin-user-binding \
   --clusterrole=cluster-admin \
   --serviceaccount=kubernetes-dashboard:admin-user && \
 
-sudo kubectl -n kubernetes-dashboard create token admin-user > $HOME/.kube/dashbord/d_token && \
+kubectl -n kubernetes-dashboard create token admin-user > $HOME/.kube/dashbord/d_token && \
 
-sudo kubectl create serviceaccount pod-service-account -n default && \
-sudo kubectl create rolebinding pod-service-account-binding \
+kubectl create serviceaccount pod-service-account -n default && \
+kubectl create rolebinding pod-service-account-binding \
   --role=view \
   --serviceaccount=default:pod-service-account \
   --namespace=default && \
-sudo kubectl create clusterrolebinding pod-service-account-cluster-binding \
+kubectl create clusterrolebinding pod-service-account-cluster-binding \
   --clusterrole=cluster-admin \
   --serviceaccount=default:pod-service-account && \
 
-sudo kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > $HOME/.kube/dashbord/c_token && \
+kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > $HOME/.kube/dashbord/c_token && \
 
 echo "" && echo "https://$(curl -s ifconfig.me; echo):30000" && echo "" && \
 echo "" && echo "dashboard_token:" && cat $HOME/.kube/dashbord/d_token && echo "" && \
-echo "" && echo "cluster_token:" && cat $HOME/.kube/dashbord/c_token && echo "" 
+echo "" && echo "cluster_token:" && cat $HOME/.kube/dashbord/c_token && echo "" '
 
 
 
