@@ -38,10 +38,10 @@ apt update && sudo apt upgrade -y && \
 
 sleep 30 && \
 
-kubectl get pods -A && \
+kubectl get pods -A' && \
 
-mkdir -p $HOME/.kube/dashbord && \
-chown $(id -u):$(id -g) $HOME/.kube/dashbord
+sudo mkdir -p $HOME/.kube/dashbord && \
+sudo bash -c 'chown $(id -u):$(id -g) $HOME/.kube/dashbord
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > $HOME/.kube/dashbord/dashboard-deployment.yaml && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > $HOME/.kube/dashbord/node-port.yaml && \
 chown $(id -u):$(id -g) $HOME/.kube/dashbord/dashboard-deployment.yaml
