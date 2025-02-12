@@ -1,3 +1,6 @@
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_setup | sudo bash
+
+
 # S1
 sudo bash -c 'timedatectl set-timezone America/New_York && \
 apt update && \
