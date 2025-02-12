@@ -38,7 +38,7 @@ apt update && sudo apt upgrade -y && \
 
 sleep 30 && \
 
-kubectl get pods -A' && \
+kubectl get pods -A && \
 
 mkdir -p /home/ubuntu/.kube/dashboard && \
 bash -c 'chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard
