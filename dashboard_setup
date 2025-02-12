@@ -24,7 +24,10 @@ sudo kubeadm init \
 
 sudo mkdir -p $HOME/.kube && \
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
-sudo chown $(id -u):$(id -g) $HOME/.kube/config && \
+sudo chown $(id -u):$(id -g) $HOME/.kube/ && \
+
+sudo mkdir -p /root/.kube && \
+sudo cp ~/.kube/config /root/.kube/config && \
 
 sudo kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
 sudo kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
@@ -33,11 +36,12 @@ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Do
 
 sudo apt update && sudo apt upgrade -y && \
 
-sleep 20 && \
+sleep 30 && \
 
 sudo kubectl get pods -A && \
 
 sudo mkdir -p $HOME/.kube/dashbord && \
+sudo chown $(id -u):$(id -g) $HOME/.kube/dashbord
 sudo curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > $HOME/.kube/dashbord/dashboard-deployment.yaml && \
 sudo curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > $HOME/.kube/dashbord/node-port.yaml && \
 
@@ -47,8 +51,8 @@ sudo kubectl apply -f $HOME/.kube/dashbord/node-port.yaml && \
 sleep 30 && \
 
 sudo kubectl get pods -n kubernetes-dashboard && \
-sudo touch $HOME/.kube/dashbord/d_token && \
-sudo touch $HOME/.kube/dashbord/c_token && \
+sudo touch $HOME/.kube/dashbord/d_token && sudo chown $(id -u):$(id -g) $HOME/.kube/dashbord/d_token && \
+sudo touch $HOME/.kube/dashbord/c_token && sudo chown $(id -u):$(id -g) $HOME/.kube/dashbord/c_token && \
 
 sudo kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
 sudo kubectl create clusterrolebinding admin-user-binding \
@@ -68,9 +72,9 @@ sudo kubectl create clusterrolebinding pod-service-account-cluster-binding \
 
 sudo kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > $HOME/.kube/dashbord/c_token && \
 
-echo "https://$(curl -s ifconfig.me; echo):30000" && \
-echo "dashboard_token:" && cat $HOME/.kube/dashbord/d_token && \
-echo "cluster_token:" && cat $HOME/.kube/dashbord/c_token
+echo "" && echo "https://$(curl -s ifconfig.me; echo):30000" && echo "" && \
+echo "" && echo "dashboard_token:" && cat $HOME/.kube/dashbord/d_token && echo "" && \
+echo "" && echo "cluster_token:" && cat $HOME/.kube/dashbord/c_token && echo "" 
 
 
 
