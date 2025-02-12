@@ -41,7 +41,7 @@ sleep 30 && \
 kubectl get pods -A && \
 
 mkdir -p /home/ubuntu/.kube/dashboard && \
-bash -c 'chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard
+chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashboard/node-port.yaml && \
 chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml
