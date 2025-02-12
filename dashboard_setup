@@ -24,7 +24,7 @@ kubeadm init \
 
 mkdir -p /home/ubuntu/.kube && \
 cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config && \
-chown $(id -u):$(id -g) /home/ubuntu/.kube && \
+chown ubuntu /home/ubuntu/.kube && \
 
 mkdir -p /root/.kube && \
 cp /home/ubuntu/.kube/config /root/.kube/config && \
@@ -41,11 +41,11 @@ sleep 30 && \
 kubectl get pods -A && \
 
 mkdir -p /home/ubuntu/.kube/dashboard && \
-chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard
+chown ubuntu /home/ubuntu/.kube/dashboard
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashboard/node-port.yaml && \
-chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml
-chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/node-port.yaml
+chown ubuntu /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml
+chown ubuntu /home/ubuntu/.kube/dashboard/node-port.yaml
 
 kubectl apply -f /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
 kubectl apply -f /home/ubuntu/.kube/dashboard/node-port.yaml && \
@@ -66,4 +66,4 @@ kubectl create clusterrolebinding admin-user-binding \
 kubectl -n kubernetes-dashboard create token admin-user > /home/ubuntu/.kube/dashboard/d_token && \
 
 echo "" && echo "https://$(curl -s ifconfig.me; echo):30000" && echo "" && \
-echo "" && echo "dashboard_token:" && cat /home/ubuntu/.kube/dashboard/d_token && echo "" && \ '
+echo "" && echo "dashboard_token:" && cat /home/ubuntu/.kube/dashboard/d_token && echo "" '
