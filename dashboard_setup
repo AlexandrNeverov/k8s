@@ -19,39 +19,39 @@ kubeadm init \
   --apiserver-advertise-address=$(hostname -I | awk "{print $1}") \
   --pod-network-cidr=10.244.0.0/16 \
   --apiserver-cert-extra-sans=$(curl -s ifconfig.me; echo) && \
-mkdir -p $HOME/.kube && \
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
-chown $(id -u):$(id -g) $HOME/.kube/config && \
+mkdir -p /home/ubuntu/.kube && \
+cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config && \
+chown $(id -u):$(id -g) /home/ubuntu/.kube/config && \
 kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
 kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
 apt update && apt upgrade -y && \
 sleep 30 && \
 kubectl get pods -A && \
-mkdir -p $HOME/.kube/dashbord && \
-curl https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > $HOME/.kube/dashbord/dashboard-deployment.yaml && \
-curl https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > $HOME/.kube/dashbord/node-port.yaml && \
-kubectl apply -f $HOME/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f $HOME/.kube/dashbord/node-port.yaml && \
+mkdir -p /home/ubuntu/.kube/dashbord && \
+curl https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && \
+curl https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashbord/node-port.yaml && \
+kubectl apply -f /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f /home/ubuntu/.kube/dashbord/node-port.yaml && \
 sleep 30 && \
 kubectl get pods -n kubernetes-dashboard && \
-touch HOME/.kube/dashbord/d_token && \
-touch HOME/.kube/c_token && \
+touch /home/ubuntu/.kube/dashbord/d_token && \
+touch /home/ubuntu/.kube/c_token && \
 kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
 kubectl create clusterrolebinding admin-user-binding \
   --clusterrole=cluster-admin \
-  --serviceaccount=kubernetes-dashboard:admin-user \
-kubectl -n kubernetes-dashboard create token admin-user > HOME/.kube/dashbord/d_token && \
+  --serviceaccount=kubernetes-dashboard:admin-user && \
+kubectl -n kubernetes-dashboard create token admin-user > /home/ubuntu/.kube/dashbord/d_token && \
 kubectl create serviceaccount pod-service-account -n default && \
 kubectl create rolebinding pod-service-account-binding \
   --role=view \
   --serviceaccount=default:pod-service-account \
-  --namespace=default \
-  kubectl create clusterrolebinding pod-service-account-cluster-binding \
+  --namespace=default && \
+kubectl create clusterrolebinding pod-service-account-cluster-binding \
   --clusterrole=cluster-admin \
-  --serviceaccount=default:pod-service-account \
-kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > HOME/.kube/c_token && \
+  --serviceaccount=default:pod-service-account && \
+kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > /home/ubuntu/.kube/c_token && \
 echo "https:// $(curl -s ifconfig.me; echo):30000" && \
-cat HOME/.kube/dashbord/d_token '
+cat /home/ubuntu/.kube/dashbord/d_token'
   
 
 
