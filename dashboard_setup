@@ -22,12 +22,12 @@ kubeadm init \
   --pod-network-cidr=10.244.0.0/16 \
   --apiserver-cert-extra-sans=$(curl -s ifconfig.me; echo) && \
 
-mkdir -p $HOME/.kube && \
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
-chown $(id -u):$(id -g) $HOME/.kube/ && \
+mkdir -p /home/ubuntu/.kube && \
+cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config && \
+chown $(id -u):$(id -g) /home/ubuntu/.kube && \
 
 mkdir -p /root/.kube && \
-cp ~/.kube/config /root/.kube/config && \
+cp /home/ubuntu/.kube/config /root/.kube/config && \
 
 kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
 kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
@@ -40,28 +40,28 @@ sleep 30 && \
 
 kubectl get pods -A' && \
 
-sudo mkdir -p $HOME/.kube/dashbord && \
-sudo bash -c 'chown $(id -u):$(id -g) $HOME/.kube/dashbord
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > $HOME/.kube/dashbord/dashboard-deployment.yaml && \
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > $HOME/.kube/dashbord/node-port.yaml && \
-chown $(id -u):$(id -g) $HOME/.kube/dashbord/dashboard-deployment.yaml
-chown $(id -u):$(id -g) $HOME/.kube/dashbord/node-port.yaml
+mkdir -p /home/ubuntu/.kube/dashboard && \
+bash -c 'chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashboard/node-port.yaml && \
+chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml
+chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/node-port.yaml
 
-kubectl apply -f $HOME/.kube/dashbord/dashboard-deployment.yaml && \
-kubectl apply -f $HOME/.kube/dashbord/node-port.yaml && \
+kubectl apply -f /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
+kubectl apply -f /home/ubuntu/.kube/dashboard/node-port.yaml && \
 
 sleep 30 && \
 
 kubectl get pods -n kubernetes-dashboard && \
-touch $HOME/.kube/dashbord/d_token && chown $(id -u):$(id -g) $HOME/.kube/dashbord/d_token && \
-touch $HOME/.kube/dashbord/c_token && chown $(id -u):$(id -g) $HOME/.kube/dashbord/c_token && \
+touch /home/ubuntu/.kube/dashboard/d_token && chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/d_token && \
+touch /home/ubuntu/.kube/dashboard/c_token && chown $(id -u):$(id -g) /home/ubuntu/.kube/dashboard/c_token && \
 
 kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
 kubectl create clusterrolebinding admin-user-binding \
   --clusterrole=cluster-admin \
   --serviceaccount=kubernetes-dashboard:admin-user && \
 
-kubectl -n kubernetes-dashboard create token admin-user > $HOME/.kube/dashbord/d_token && \
+kubectl -n kubernetes-dashboard create token admin-user > /home/ubuntu/.kube/dashboard/d_token && \
 
 kubectl create serviceaccount pod-service-account -n default && \
 kubectl create rolebinding pod-service-account-binding \
@@ -72,14 +72,8 @@ kubectl create clusterrolebinding pod-service-account-cluster-binding \
   --clusterrole=cluster-admin \
   --serviceaccount=default:pod-service-account && \
 
-kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > $HOME/.kube/dashbord/c_token && \
+kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > /home/ubuntu/.kube/dashboard/c_token && \
 
 echo "" && echo "https://$(curl -s ifconfig.me; echo):30000" && echo "" && \
-echo "" && echo "dashboard_token:" && cat $HOME/.kube/dashbord/d_token && echo "" && \
-echo "" && echo "cluster_token:" && cat $HOME/.kube/dashbord/c_token && echo "" '
-
-
-
-
-
-  '
+echo "" && echo "dashboard_token:" && cat /home/ubuntu/.kube/dashboard/d_token && echo "" && \
+echo "" && echo "cluster_token:" && cat /home/ubuntu/.kube/dashboard/c_token && echo "" '
