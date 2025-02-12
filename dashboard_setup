@@ -2,7 +2,7 @@ sudo bash -c 'apt update && apt install -y apt-transport-https ca-certificates c
 
 sudo mkdir -p -m 755 /etc/apt/keyrings && \
 sudo curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+sudo echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
 
 sudo apt update && sudo apt install -y kubelet kubeadm kubectl containerd && \
 sudo swapoff -a && sudo apt-mark hold kubelet kubeadm kubectl && \
@@ -13,8 +13,8 @@ echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf && \
 echo "net.bridge.bridge-nf-call-iptables=1" | sudo tee -a /etc/sysctl.conf && \
 sudo sysctl -p /etc/sysctl.conf && \
 sudo mkdir -p /etc/containerd && sudo touch /etc/containerd/config.toml && \
-sudo curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && \
-cat /etc/containerd/config.toml && \
+sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml' && \
+sudo cat /etc/containerd/config.toml && \
 sudo systemctl restart containerd && \
 
 sudo kubeadm init \
@@ -28,6 +28,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config && \
 
 sudo kubectl taint nodes $(hostname) node.kubernetes.io/not-ready:NoSchedule- && \
 sudo kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule- && \
+
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && \
 
 sudo apt update && sudo apt upgrade -y && \
