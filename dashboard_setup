@@ -26,19 +26,19 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 apt update && apt upgrade -y && \
 sleep 30 && \
 kubectl get pods -A && \
-mkdir -p /home/ubuntu/.kube/dashbord && \
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && \
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashbord/node-port.yaml && \
-kubectl apply -fsSL /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f /home/ubuntu/.kube/dashbord/node-port.yaml && \
+mkdir -p /home/.kube/dashbord && \
+curl -f https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/.kube/dashbord/dashboard-deployment.yaml && \
+curl -f https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/.kube/dashbord/node-port.yaml && \
+kubectl apply -f /home/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f /home/.kube/dashbord/node-port.yaml && \
 sleep 30 && \
 kubectl get pods -n kubernetes-dashboard && \
-touch /home/ubuntu/.kube/dashbord/d_token && \
-touch /home/ubuntu/.kube/c_token && \
+touch /home/.kube/dashbord/d_token && \
+touch /home/.kube/c_token && \
 kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
 kubectl create clusterrolebinding admin-user-binding \
   --clusterrole=cluster-admin \
   --serviceaccount=kubernetes-dashboard:admin-user && \
-kubectl -n kubernetes-dashboard create token admin-user > /home/ubuntu/.kube/dashbord/d_token && \
+kubectl -n kubernetes-dashboard create token admin-user > /home/.kube/dashbord/d_token && \
 kubectl create serviceaccount pod-service-account -n default && \
 kubectl create rolebinding pod-service-account-binding \
   --role=view \
@@ -49,8 +49,8 @@ kubectl create clusterrolebinding pod-service-account-cluster-binding \
   --serviceaccount=default:pod-service-account && \
 kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > /home/ubuntu/.kube/c_token && \
 echo "https://$(curl -s ifconfig.me; echo):30000" && \
-echo "dashboard_token:" && cat /home/ubuntu/.kube/dashbord/d_token && /
-echo "cluster_token:" && cat /home/ubuntu/.kube/dashbord/c_token'
+echo "dashboard_token:" && cat /home/.kube/dashbord/d_token && /
+echo "cluster_token:" && cat /home/.kube/dashbord/c_token'
   
 
 
