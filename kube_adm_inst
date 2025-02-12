@@ -1,7 +1,7 @@
 # S1
 sudo bash -c 'timedatectl set-timezone America/New_York && \
 apt update && \
-apt install -y chrony net-tools tree openssl apt-transport-https ca-certificates curl gpg && \
+apt install -y chrony net-tools tree apt-transport-https ca-certificates curl gpg && \
 netstat --version && openssl version && tree --version && apt show apt-transport-https && apt show ca-certificates && \
 curl --version && \
 mkdir -p -m 755 /etc/apt/keyrings && \
@@ -17,7 +17,7 @@ modprobe br_netfilter && modprobe overlay && echo "net.ipv4.ip_forward=1" >> /et
 curl -SL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && cat /etc/containerd/config.toml && \
 systemctl restart containerd && \
 kubeadm init \
-  --apiserver-advertise-address=10.0.77.88 \
+  --apiserver-advertise-address=$(hostname -I | awk '{print $1}') \
   --pod-network-cidr=10.244.0.0/16 \
   --apiserver-cert-extra-sans=107.21.85.77 && \
 mkdir -p /home/.kube && \
