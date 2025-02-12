@@ -33,7 +33,7 @@ kubectl apply -f /home/.kube/dashbord/dashboard-deployment.yaml && kubectl apply
 sleep 30 && \
 kubectl get pods -n kubernetes-dashboard && \
 touch /home/.kube/dashbord/d_token && \
-touch /home/.kube/c_token && \
+touch /home/.kube/dashboard/c_token && \
 kubectl create serviceaccount admin-user -n kubernetes-dashboard && \
 kubectl create clusterrolebinding admin-user-binding \
   --clusterrole=cluster-admin \
