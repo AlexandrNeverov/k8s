@@ -1,10 +1,8 @@
 sudo bash -c 'timedatectl set-timezone America/New_York && \
 apt update && \
 apt install -y chrony net-tools tree apt-transport-https ca-certificates curl gpg && \
-netstat --version && tree --version && apt show apt-transport-https && apt show ca-certificates && \
-curl --version && \
 mkdir -p -m 755 /etc/apt/keyrings && \
-curl -fSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
 apt update && apt upgrade -y && \
 apt install -y kubelet kubeadm kubectl containerd && \
@@ -13,7 +11,7 @@ systemctl enable chrony && systemctl start chrony && \
 apt update && apt upgrade -y && \
 modprobe br_netfilter && modprobe overlay && echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && echo \
 "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf && sysctl -p /etc/sysctl.conf && mkdir -p /etc/containerd && touch /etc/containerd/config.toml && \
-curl -SL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && cat /etc/containerd/config.toml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && cat /etc/containerd/config.toml && \
 systemctl restart containerd && \
 kubeadm init \
   --apiserver-advertise-address=$(hostname -I | awk "{print $1}") \
@@ -29,9 +27,9 @@ apt update && apt upgrade -y && \
 sleep 30 && \
 kubectl get pods -A && \
 mkdir -p /home/ubuntu/.kube/dashbord && \
-curl https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && \
-curl https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashbord/node-port.yaml && \
-kubectl apply -f /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f /home/ubuntu/.kube/dashbord/node-port.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashbord/node-port.yaml && \
+kubectl apply -fsSL /home/ubuntu/.kube/dashbord/dashboard-deployment.yaml && kubectl apply -f /home/ubuntu/.kube/dashbord/node-port.yaml && \
 sleep 30 && \
 kubectl get pods -n kubernetes-dashboard && \
 touch /home/ubuntu/.kube/dashbord/d_token && \
@@ -50,8 +48,9 @@ kubectl create clusterrolebinding pod-service-account-cluster-binding \
   --clusterrole=cluster-admin \
   --serviceaccount=default:pod-service-account && \
 kubectl -n default get secret $(kubectl -n default get sa/pod-service-account -o=jsonpath="{.secrets[0].name}") -o=jsonpath="{.data.token}" | base64 --decode > /home/ubuntu/.kube/c_token && \
-echo "https:// $(curl -s ifconfig.me; echo):30000" && \
-cat /home/ubuntu/.kube/dashbord/d_token'
+echo "https://$(curl -s ifconfig.me; echo):30000" && \
+echo "dashboard_token:" && cat /home/ubuntu/.kube/dashbord/d_token && /
+echo "cluster_token:" && cat /home/ubuntu/.kube/dashbord/c_token'
   
 
 
