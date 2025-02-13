@@ -1,6 +1,25 @@
-sudo apt update
-sudo install -y conainerd kubelet kubeadm kubectl
-sudo systemctl enable containerid
-sudo systemctl start containerd
-sudo swapoff -a
+sudo bash -c 'apt update && apt install -y apt-transport-https ca-certificates curl gpg && \
 
+mkdir -p -m 755 /etc/apt/keyrings && \
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
+
+apt update && apt install -y kubelet kubeadm kubectl containerd && \
+swapoff -a && apt-mark hold kubelet kubeadm kubectl && \
+apt update && apt upgrade -y && \
+
+modprobe br_netfilter && modprobe overlay && \
+echo "net.ipv4.ip_forward=1" | tee -a /etc/sysctl.conf && \
+echo "net.bridge.bridge-nf-call-iptables=1" | tee -a /etc/sysctl.conf && \
+sysctl -p /etc/sysctl.conf && \
+mkdir -p /etc/containerd && touch /etc/containerd/config.toml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && \
+cat /etc/containerd/config.toml && \
+systemctl restart containerd && \
+
+apt update && sudo apt upgrade -y && \
+
+echo ""wait 5 seconds"" && \
+echo "" && \
+
+kubeadm join 10.0.137.100:6443 --token eovk2x.9ylr1jenflqojrlh --discovery-token-ca-cert-hash sha256:d556bcfca3168dd920d0529cbc47d22e8b58ac874a0e3bcd88977c1e84094ce9'
