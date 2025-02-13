@@ -1,0 +1,6 @@
+sudo apt update
+sudo install -y conainerd kubelet kubeadm kubectl
+sudo systemctl enable containerid
+sudo systemctl start containerd
+sudo swapoff -a
+
