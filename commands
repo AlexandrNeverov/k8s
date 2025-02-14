@@ -1,0 +1,3 @@
+#Commands:
+#k8_mn_setup_dashboard
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/1_k8_mn_setup_dashboard | sudo bash
