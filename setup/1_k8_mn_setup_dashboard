@@ -13,7 +13,7 @@ echo "net.ipv4.ip_forward=1" | tee -a /etc/sysctl.conf && \
 echo "net.bridge.bridge-nf-call-iptables=1" | tee -a /etc/sysctl.conf && \
 sysctl -p /etc/sysctl.conf && \
 mkdir -p /etc/containerd && touch /etc/containerd/config.toml && \
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/config.toml > /etc/containerd/config.toml && \
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/configs/systemd_config.toml > /etc/containerd/config.toml && \
 cat /etc/containerd/config.toml && \
 systemctl restart containerd && \
 
@@ -42,8 +42,8 @@ kubectl get pods -A && \
 
 mkdir -p /home/ubuntu/.kube/dashboard && \
 chown ubuntu /home/ubuntu/.kube/dashboard
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/dashboard_deployment.yaml > /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/node_port.yaml > /home/ubuntu/.kube/dashboard/node-port.yaml && \
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/manifests/m1_dashboard_deployment.yaml > /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml && \
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/manifests/m1_node_port.yaml > /home/ubuntu/.kube/dashboard/node-port.yaml && \
 chown ubuntu /home/ubuntu/.kube/dashboard/dashboard-deployment.yaml
 chown ubuntu /home/ubuntu/.kube/dashboard/node-port.yaml
 
