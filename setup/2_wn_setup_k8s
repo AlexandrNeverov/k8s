@@ -17,7 +17,4 @@ curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main
 cat /etc/containerd/config.toml && \
 systemctl restart containerd && \
 
-apt update && sudo apt upgrade -y && \
-
-echo "wait 5 seconds" && \
-echo "finish"'
+apt update && sudo apt upgrade -y'
