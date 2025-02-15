@@ -2,6 +2,6 @@
 #setup_k8s_dashboard
 curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/1_mn_setup_k8s_dashboard | sudo bash
 #wn_setup_k8s
-curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/2_wn_setup_k8s | sudo bash
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/2_wn_setup_k8s | sudo bash
 #mn_setup_nfs
 curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/2_wn_setup_k8s | sudo bash
