@@ -1,3 +1,10 @@
 sudo bash -c 'apt update && apt upgrade -y && \
 apt install nfs-common && \
 mkdir -p /home/ubuntu/.kube/mnt/nfs_client && mount 10.0.218.175:/home/ubuntu/.kube/mnt/nfs_share'
+
+sudo nano /etc/fstab 
+10.0.218.175:/home/ubuntu/.kube/mnt/nfs_share /home/ubuntu/.kube/mnt/nfs_client nfs defaults 0 0
+
+/lib/systemd/system/nfs-common.service -> /dev/null
+/usr/lib/systemd/system/nfs-common.service -> /dev/null
+sudo find /etc/systemd /lib/systemd /usr/lib/systemd -name 'nfs-common.service' -exec ls -l {} \
