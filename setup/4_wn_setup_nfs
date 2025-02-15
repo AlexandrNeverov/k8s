@@ -1,4 +1,3 @@
 sudo bash -c 'apt update && apt upgrade -y && \
 apt install nfs-common && \
-mkdir -p /home/ubuntu/.kube/mnt/nfs_client && mount $(grep -oP '(?<=server: https://)[^:]*' /etc/kubernetes/kubelet.conf):/mnt/nfs_share /mnt/nfs_client && \
-echo "finish" '
+mkdir -p /home/ubuntu/.kube/mnt/nfs_client && mount 10.0.137.147:/home/ubuntu/.kube/mnt/nfs_client'
