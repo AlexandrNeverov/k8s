@@ -5,4 +5,7 @@ mkdir -p /home/ubuntu/.kube/mnt/nfs_share && chown nobody:nogroup /home/ubuntu/.
 echo "/home/ubuntu/.kube/mnt/nfs_share *(rw,sync,no_subtree_check)" >> /etc/exports && \
 exportfs -a && echo "" && \
 exportfs -v && echo "" && showmount -e && \
+chown nobody:nogroup /etc/exports && sudo chmod 777 /etc/exports && \
+sudo systemctl restart nfs-kernel-server && \
+systemctl status nfs-kernel-server && \
 echo "finish"'
