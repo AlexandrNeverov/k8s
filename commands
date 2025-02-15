@@ -1,5 +1,7 @@
-#Commands:
-#k8_mn_setup_dashboard
-curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/1_k8_mn_setup_dashboard | sudo bash
-#k8_mn_setup_dashboard
-curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/2_k8_wn_setup | sudo bash
+#Commands
+#setup_k8s_dashboard
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/1_mn_setup_k8s_dashboard | sudo bash
+#wn_setup_k8s
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/2_wn_setup_k8s | sudo bash
+#mn_setup_nfs
+curl -fsSL https://github.com/AlexandrNeverov/k8s/blob/main/setup/3_mn_setup_nfs | sudo bash
