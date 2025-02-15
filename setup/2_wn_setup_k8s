@@ -20,4 +20,4 @@ systemctl restart containerd && \
 apt update && sudo apt upgrade -y && \
 
 echo "wait 5 seconds" && \
-echo ""'
+echo "finish"'
