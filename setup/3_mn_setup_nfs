@@ -1,1 +1,8 @@
-
+sudo bash -c 'apt update && apt upgrade -y && \
+apt install -y nfs-kernel-server && \
+systemctl enable nfs-kernel-server && systemctl start nfs-kernel-server && \
+mkdir -p /home/ubuntu/.kube/mnt/nfs_share && chown nobody:nogroup /home/ubuntu/.kube/mnt/nfs_share && chmod 777 /home/ubuntu/.kube/mnt/nfs_share && \
+echo "/home/ubuntu/.kube/mnt/nfs_share *(rw,sync,no_subtree_check)" >> /etc/exports && \
+exportfs -a && echo "" && \
+exportfs -v && echo "" && showmount -e && \
+echo "finish"'
