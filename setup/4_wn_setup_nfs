@@ -1,4 +1,4 @@
 sudo bash -c 'apt update && apt install -y nfs-common && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/configs/idmapd.conf > /etc/idmapd.conf && \
-rm -f /etc/systemd/system/nfs-common.service && rm -f /lib/systemd/system/nfs-common.service && \
+rm -f /etc/systemd/system/nfs-common.service && rm -f /lib/systemd/system/nfs-common.service && mkdir -p /home/ubuntu/.kube/mnt/nfs_share && \
 systemctl daemon-reexec && systemctl start nfs-common && systemctl status nfs-common'
