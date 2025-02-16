@@ -1,1 +1,15 @@
-
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+spec:
+  capacity:
+    storage: 10Gi  
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany 
+  persistentVolumeReclaimPolicy: Retain  
+  storageClassName: "" 
+  nfs:
+    path: /home/ubuntu/.kube/mnt/nfs_share
+    server: 10.0.25.51 
