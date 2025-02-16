@@ -1,4 +1,4 @@
-sudo bash -c 'apt update && apt upgrade -y && apt install nfs-common && \
+sudo bash -c 'apt update && apt upgrade -y && apt install -y nfs-common && \
 rm -f /etc/systemd/system/nfs-common.service && sudo rm -f /lib/systemd/system/nfs-common.service && \
 systemctl daemon-reexec
 sudo systemctl start nfs-common
