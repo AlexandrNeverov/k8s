@@ -12,6 +12,7 @@ sudo find /etc/systemd /lib/systemd /usr/lib/systemd -name 'nfs-common.service' 
 
 sudo rm -f /etc/systemd/system/nfs-common.service
 sudo rm -f /lib/systemd/system/nfs-common.service
+sudo systemctl daemon-reexec
 
 ubuntu@ip-10-0-129-108:~$ sudo rm -f /etc/systemd/system/nfs-common.service
 ubuntu@ip-10-0-129-108:~$ sudo chattr -i /etc/systemd/system/nfs-common.service
