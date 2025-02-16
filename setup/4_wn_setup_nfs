@@ -13,9 +13,24 @@ sudo find /etc/systemd /lib/systemd /usr/lib/systemd -name 'nfs-common.service' 
 sudo rm -f /etc/systemd/system/nfs-common.service
 sudo rm -f /lib/systemd/system/nfs-common.service
 sudo systemctl daemon-reexec
+sudo systemctl start nfs-common
 
 ubuntu@ip-10-0-129-108:~$ sudo rm -f /etc/systemd/system/nfs-common.service
 ubuntu@ip-10-0-129-108:~$ sudo chattr -i /etc/systemd/system/nfs-common.service
 chattr: No such file or directory while trying to stat /etc/systemd/system/nfs-common.service
 ubuntu@ip-10-0-129-108:~$ sudo rm -f /lib/systemd/system/nfs-common.service
 ubuntu@ip-10-0-129-108:~$ sudo systemctl list-unit-files --state=masked
+
+
+sudo nano /etc/idmapd.conf
+[General]
+
+Verbosity = 0
+# set your own domain here, if it differs from FQDN minus hostname
+ Domain = localdomain
+
+[Mapping]
+
+Nobody-User = nobody
+Nobody-Group = nogroup
+sudo systemctl restart nfs-common
