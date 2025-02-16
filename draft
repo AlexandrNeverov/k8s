@@ -1,3 +1,9 @@
+sudo mount -t nfs 10.0.25.51:/home/ubuntu/.kube/mnt/nfs_share /home/ubuntu/.kube/mnt/nfs_share
+
+mkdir .kube && cd .kube && mkdir mnt && cd mnt && mkdir nfs_share
+
+mkdir mnt && cd mnt && mkdir nfs_share
+
 sudo bash -c 'apt update && apt upgrade -y && \
 apt install nfs-common && \
 mkdir -p /home/ubuntu/.kube/mnt/nfs_client && mount 10.0.218.175:/home/ubuntu/.kube/mnt/nfs_share'
