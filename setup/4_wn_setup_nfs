@@ -4,4 +4,4 @@ systemctl daemon-reexec
 sudo systemctl start nfs-common
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/configs/idmapd.conf > /etc/idmapd.conf && \
 systemctl restart nfs-common
-systemctl status nfs-common '
+systemctl status nfs-common'
