@@ -3,5 +3,7 @@
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/1_mn_setup_k8s_dashboard | sudo bash
 #wn_setup_k8s
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/2_wn_setup_k8s | sudo bash
-#mn_setup_nfs
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/3_mn_setup_nfs| sudo bash
+#mn_setup_nfs_sr
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/3_mn_setup_nfs | sudo bash
+#wn_setup_nfs_cl
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/4_wn_setup_nfs | sudo bash
