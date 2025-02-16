@@ -65,5 +65,7 @@ kubectl create clusterrolebinding admin-user-binding \
 
 kubectl -n kubernetes-dashboard create token admin-user > /home/ubuntu/.kube/dashboard/d_token && \
 
+mkdir -p /home/ubuntu/.kube/manifests && touch /home/ubuntu/.kube/manifests\nfs_pv.yaml && touch /home/ubuntu/.kube/manifests\nfs_pvc.yaml && \
+
 echo "" && echo "https://$(curl -s ifconfig.me; echo):30000" && echo "" && \
 echo "" && echo "dashboard_token:" && cat /home/ubuntu/.kube/dashboard/d_token && echo "" '
