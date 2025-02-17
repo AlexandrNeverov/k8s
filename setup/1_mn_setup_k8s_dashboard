@@ -1,4 +1,4 @@
-sudo bash -c 'apt update && timedatectl set-timezone America/New_York && apt install -y apt-transport-https ca-certificates curl gpg && \
+sudo bash -c 'apt update && timedatectl set-timezone America/New_York && apt install -y apt-transport-https ca-certificates curl gpg net-tools && \
 
 mkdir -p -m 755 /etc/apt/keyrings && \
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
