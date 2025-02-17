@@ -1,4 +1,4 @@
-sudo bash -c 'apt update && apt upgrade -y && \
+sudo bash -c 'apt update && apt upgrade -y && timedatectl set-timezone America/New_York && \
 apt install -y nfs-kernel-server && \
 systemctl enable nfs-kernel-server && systemctl start nfs-kernel-server && \
 mkdir -p /home/ubuntu/.kube/mnt/nfs_share && chown nobody:nogroup /home/ubuntu/.kube/mnt/nfs_share && chmod 777 /home/ubuntu/.kube/mnt/nfs_share && \
