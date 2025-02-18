@@ -4,12 +4,12 @@ metadata:
   name: nfs-pv
 spec:
   capacity:
-    storage: 10Gi  
+    storage: 10Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany 
-  persistentVolumeReclaimPolicy: Retain  
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: "" 
   nfs:
     path: /home/ubuntu/.kube/mnt/nfs_share
-    server: 10.0.25.51 
+    server: 10.0.166.157
