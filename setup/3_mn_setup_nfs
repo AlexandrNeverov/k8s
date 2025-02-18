@@ -1,11 +1,7 @@
 sudo bash -c 'apt update && apt upgrade -y && timedatectl set-timezone America/New_York && \
-apt install -y nfs-kernel-server net-tools && \
-systemctl enable nfs-kernel-server && systemctl start nfs-kernel-server && \
 mkdir -p /home/ubuntu/.kube/mnt/nfs_share && chown nobody:nogroup /home/ubuntu/.kube/mnt/nfs_share && chmod 777 /home/ubuntu/.kube/mnt/nfs_share && \
+apt install -y nfs-kernel-server && \
 echo "/home/ubuntu/.kube/mnt/nfs_share *(rw,sync,no_subtree_check)" >> /etc/exports && \
-exportfs -a && echo "" && \
-exportfs -v && echo "" && showmount -e && \
-chown nobody:nogroup /etc/exports && sudo chmod 777 /etc/exports && \
+exportfs -a  && \
 sudo systemctl restart nfs-kernel-server && \
-systemctl status nfs-kernel-server && \
-echo "finish"'
+systemctl status nfs-kernel-server'
