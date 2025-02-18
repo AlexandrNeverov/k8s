@@ -1,0 +1,6 @@
+sudo bash -c 'mkdir -p /home/ubuntu/manifests/nfs && cd ~/home/ubuntu/manifests/nfs && \
+touch nfs_pv.yaml pvc.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m2_nfs_pv.yaml > /home/ubuntu/manifests/nfs/nfs/pv.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m2_nfs_pvc.yaml > /home/ubuntu/manifests/nfs/nfs/pvc.yaml && \
+kubectl apply -f /home/ubuntu/manifests/nfs && /
+sleep 5 && kubectl get pv && kubectl get pvc'
