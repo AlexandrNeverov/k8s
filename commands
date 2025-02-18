@@ -8,4 +8,4 @@ curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main
 #wn_setup_nfs_cl
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/4_wn_setup_nfs | sudo bash
 #mn_manifests_nfs_pv_pvc
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/4_wn_setup_nfs | sudo bash
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/5_mn_setup_manifests_nfs | sudo bash
