@@ -7,3 +7,5 @@ curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/3_mn_setup_nfs | sudo bash
 #wn_setup_nfs_cl
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/4_wn_setup_nfs | sudo bash
+#mn_manifests_nfs_pv_pvc
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/4_wn_setup_nfs | sudo bash
