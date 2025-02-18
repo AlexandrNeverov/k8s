@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: "" 
+  storageClassName: ""
   nfs:
     path: /home/ubuntu/.kube/mnt/nfs_share
     server: 10.0.166.157
