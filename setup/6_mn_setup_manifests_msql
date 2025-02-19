@@ -4,11 +4,16 @@ curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main
 kubectl apply -f . && \
 sleep 5 && kubectl get pv && kubectl get pvc && \
 sleep 5 && \
-curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m3_mysql_secret.yaml > mysql_secret.yaml && \'
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m3_mysql_secret.yaml > mysql_secret.yaml && \
 kubectl apply -f mysql_secret.yaml && \
 kubectl get secret && \
 sleep 5 && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m1_mysql_deployment.yaml > mysql_deployment.yaml && \
 kubectl apply -f mysql_deployment.yaml && \
 sleep 5 && \
-kubectl get pods -A'
+kubectl get pods -A && \
+sleep 5 && \ 
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m4_mysql_service.yaml > mysql_service.yaml && \
+kubectl apply -f mysql_service.yaml && \
+sleep 5 && \
+kubectl get svc '
