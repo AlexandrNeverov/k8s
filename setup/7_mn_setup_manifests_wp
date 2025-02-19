@@ -1,0 +1,12 @@
+sudo bash -c 'mkdir -p ~/manifests/wordpress && cd ~/manifests/mysql && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m5_wp_cm.yaml > wordpress_configmap.yaml && \
+kubectl apply -f wordpress_configmap.yaml && \
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m1_wp_deployment.yaml > wordpress_deployment.yaml && \
+kubectl apply -f wordpress_deployment.yaml && \
+sleep 5 && \
+kubectl get pods -A && \
+sleep 5 && \ 
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m5_wp_service.yaml > wordpress_service.yaml && \
+kubectl apply -f wordpress_service.yaml && \
+sleep 5 && \
+kubectl get svc'
