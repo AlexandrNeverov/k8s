@@ -10,3 +10,4 @@ curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main
 #mn_manifests_nfs_pv_pvc
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/5_mn_setup_manifests_nfs | sudo bash
 #mn_manifests_nfs_mysql
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/6_mn_setup_manifests_msql | sudo bash
