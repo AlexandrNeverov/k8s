@@ -11,4 +11,5 @@ curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/5_mn_setup_manifests_nfs | sudo bash
 #mn_manifests_mysql
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/6_mn_setup_manifests_msql | sudo bash
-
+#mn_manifests_wp
+curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/setup/7_mn_setup_manifests_wp | sudo bash
