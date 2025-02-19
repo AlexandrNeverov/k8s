@@ -1,30 +1,13 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: wordpress
+  name: wordpress-ex
   namespace: default
 spec:
-  replicas: 1
+  type: NodePort
   selector:
-    matchLabels:
-      app: wordpress
-  template:
-    metadata:
-      labels:
-        app: wordpress
-    spec:
-      containers:
-        - name: wordpress
-          image: wordpress:5.7-apache
-          envFrom:
-            - configMapRef:
-                name: wordpress-config
-            - secretRef:
-                name: mysql-secret
-          ports:
-            - containerPort: 80
-        - name: ubuntu
-          image: ubuntu:24.04 
-          command: ["bash", "-c", "apt-get update && apt-get install -y iputils-ping && sleep infinity"]
-          stdin: true  
-          tty: true
+    app: wordpress
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30001
