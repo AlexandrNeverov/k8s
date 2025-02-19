@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+        - name: wordpress
+          image: wordpress:5.7-apache
+          envFrom:
+            - configMapRef:
+                name: wordpress-config
+            - secretRef:
+                name: mysql-secret
+          ports:
+            - containerPort: 80
+        - name: ubuntu
+          image: ubuntu:latest
+          command: ["sleep", "infinity"]  # Это позволит контейнеру работать в фоновом режиме
+          stdin: true 
+          tty: true 
