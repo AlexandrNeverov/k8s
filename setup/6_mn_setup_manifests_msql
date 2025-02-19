@@ -16,4 +16,4 @@ sleep 5 && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m4_mysql_service.yaml > mysql_service.yaml && \
 kubectl apply -f mysql_service.yaml && \
 sleep 5 && \
-kubectl get svc '
+kubectl get svc'
