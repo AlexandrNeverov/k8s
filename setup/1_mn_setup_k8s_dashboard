@@ -1,4 +1,4 @@
-sudo bash -c 'apt update && timedatectl set-timezone America/New_York && apt install -y apt-transport-https ca-certificates curl gpg net-tools && \
+sudo bash -c 'apt update && timedatectl set-timezone America/New_York && apt install -y apt-transport-https ca-certificates curl gpg net-tools tree && \
 
 mkdir -p -m 755 /etc/apt/keyrings && \
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
@@ -68,4 +68,5 @@ kubectl -n kubernetes-dashboard create token admin-user > /home/ubuntu/.kube/das
 mkdir -p /home/ubuntu/.kube/manifests && touch /home/ubuntu/.kube/manifests\nfs_pv.yaml && touch /home/ubuntu/.kube/manifests\nfs_pvc.yaml && \
 
 echo "" && echo "https://$(curl -s ifconfig.me; echo):30000" && echo "" && \
-echo "" && echo "dashboard_token:" && cat /home/ubuntu/.kube/dashboard/d_token && echo "" '
+echo "" && echo "dashboard_token:" && cat /home/ubuntu/.kube/dashboard/d_token && echo "" && \
+kubeadm token create --print-join-command'
