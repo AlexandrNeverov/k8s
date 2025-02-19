@@ -25,6 +25,6 @@ spec:
             - containerPort: 80
         - name: ubuntu
           image: ubuntu:latest
-          command: ["sleep", "infinity"]  # Это позволит контейнеру работать в фоновом режиме
-          stdin: true 
+          command: ["bash", "-c", "apt-get update && apt-get install -y iputils-ping && sleep infinity"]
+          stdin: true  
           tty: true 
