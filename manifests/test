@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 80
         - name: ubuntu
-          image: ubuntu:latest
+          image: ubuntu:24.04 
           command: ["bash", "-c", "apt-get update && apt-get install -y iputils-ping && sleep infinity"]
           stdin: true  
-          tty: true 
+          tty: true
