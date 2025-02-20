@@ -10,3 +10,5 @@ spec:
       storage: 10Gi
   volumeMode: Filesystem
   storageClassName: ""
+  nodeSelector:
+    master: "true"
