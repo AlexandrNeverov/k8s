@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2025-02-20T01:40:18ZZ"
+  creationTimestamp: "2025-02-20T01:40:18Z"
   labels:
     app: mysql
   name: mysql
