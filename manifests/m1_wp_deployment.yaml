@@ -18,8 +18,9 @@ spec:
       nodeSelector:
         worker_1: "true"
       containers:
-      - image: wordpress
+      - image: ubuntu:20.04
         name: wordpress
+        command: ["/bin/bash", "-c", "apt-get update && apt-get install -y apache2 php php-mysqli && curl -O https://wordpress.org/latest.tar.gz && tar -xvzf latest.tar.gz -C /var/www/html/ && apachectl -D FOREGROUND"]
         env:
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
