@@ -2,6 +2,50 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
+  creationTimestamp: null
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mysql
+    spec:
+      nodeSelector:
+        worker_2: "true
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: project-secret
+              key: password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: project-wordpress
+              key: MYSQL_DATABASE
+        volumeMounts:
+        - name: myvol
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: myvol
+        persistentVolumeClaim:
+          claimName: mypvc1
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
   namespace: default
 spec:
   replicas: 1
