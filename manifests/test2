@@ -23,6 +23,6 @@ spec:
   selector:
     app: wordpress
   sessionAffinity: None
-  type: ClusterIP
+  type: NodePort
 status:
   loadBalancer: {}
