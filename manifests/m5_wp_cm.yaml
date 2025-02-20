@@ -4,7 +4,7 @@ metadata:
   name: wordpress-config
   namespace: default
 data:
-  WORDPRESS_DB_HOST: "mysql-service:3306"
+  WORDPRESS_DB_HOST: "mysql:3306"
   WORDPRESS_DB_NAME: "wordpress"
   WORDPRESS_DB_USER: "root"
   WORDPRESS_DB_PASSWORD: "password"
