@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      nodeSelector:
+        worker_1: "true"
+      containers:
+        - name: wordpress
+          image: wordpress:5.7-apache
+          envFrom:
+            - secretRef:
+                name: mysql-secret
+          ports:
+            - containerPort: 80
