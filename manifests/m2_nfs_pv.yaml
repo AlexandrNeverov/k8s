@@ -13,3 +13,5 @@ spec:
   nfs:
     path: /home/ubuntu/.kube/mnt/nfs_share
     server: 10.0.166.157
+  nodeSelector:
+    master: "true"
