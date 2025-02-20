@@ -2,12 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
-  namespace: default
+  labels:
+    app: wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: wordpress
+  strategy: {}
   template:
     metadata:
       labels:
@@ -16,12 +18,28 @@ spec:
       nodeSelector:
         worker_1: "true"
       containers:
-        - name: wordpress
-          image: wordpress:5.7-apache
-          envFrom:
-            - configMapRef:
-                name: wordpress-config
-            - secretRef:
-                name: mysql-secret
-          ports:
-            - containerPort: 80
+      - image: wordpress
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+        - name: WORDPRESS_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-config
+              key: MYSQL_DATABASE
+        - name: WORDPRESS_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-config
+              key: WORDPRESS_DB_HOST
+        - name: WORDPRESS_DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-config
+              key: WORDPRESS_DB_USER
+      resources: {}
+status: {}
