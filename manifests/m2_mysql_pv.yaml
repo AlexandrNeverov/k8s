@@ -12,4 +12,6 @@ spec:
   storageClassName: ""
   nfs:
     path: /home/ubuntu/.kube/mnt/nfs_share
-    server: 10.0.61.157
+    server: 10.0.215.56
+  nodeSelector:
+    worker_2: "true"
