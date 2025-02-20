@@ -12,4 +12,4 @@ spec:
   storageClassName: ""
   nfs:
     path: /home/ubuntu/.kube/mnt/nfs_share
-    server: 10.0.143.162
+    server: 172.31.5.31
