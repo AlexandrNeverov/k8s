@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-  strategy: {}
   template:
     metadata:
       labels:
@@ -18,6 +17,9 @@ spec:
       nodeSelector:
         worker_1: "true"
       containers:
+      - name: wordpress
+        image: wordpress:latest
+        env:
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -38,5 +40,3 @@ spec:
             configMapKeyRef:
               name: wordpress-config
               key: WORDPRESS_DB_USER
-      resources: {}
-status: {}
