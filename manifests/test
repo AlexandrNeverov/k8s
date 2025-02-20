@@ -11,7 +11,7 @@ metadata:
 spec:
   clusterIP: 10.98.151.80
   clusterIPs:
-    - 10.96.167.237
+    - 10.98.151.80
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
   ipFamilies:
