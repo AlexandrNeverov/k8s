@@ -13,6 +13,8 @@ spec:
       labels:
         app: wordpress
     spec:
+      nodeSelector:
+        worker_1: "true"
       containers:
         - name: wordpress
           image: wordpress:5.7-apache
