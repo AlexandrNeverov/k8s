@@ -18,7 +18,7 @@ spec:
         app: mysql
     spec:
       nodeSelector:
-        worker_2: "true
+        worker_2: "true"  # Закрыты кавычки
       containers:
       - image: mysql:5.7
         name: mysql
