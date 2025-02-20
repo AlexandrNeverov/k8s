@@ -1,25 +1,30 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: wordpress
+  creationTimestamp: "2025-02-20T01:40:18ZZ"
+  labels:
+    app: mysql
+  name: mysql
   namespace: default
+  resourceVersion: "2822"
+  uid: 5b435ffc-5e4e-41c7-b72f-076a0c73eebb
 spec:
-  replicas: 1
+  clusterIP: 10.98.151.80
+  clusterIPs:
+    - 10.96.167.237
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - nodePort: 32688
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
   selector:
-    matchLabels:
-      app: wordpress
-  template:
-    metadata:
-      labels:
-        app: wordpress
-    spec:
-      nodeSelector:
-        worker_1: "true"
-      containers:
-        - name: wordpress
-          image: wordpress:5.7-apache
-          envFrom:
-            - secretRef:
-                name: mysql-secret
-          ports:
-            - containerPort: 80
+    app: mysql
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
