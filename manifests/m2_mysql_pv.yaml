@@ -13,5 +13,3 @@ spec:
   nfs:
     path: /home/ubuntu/.kube/mnt/nfs_share
     server: 10.0.143.162
-  nodeSelector:
-    worker_2: "true"
