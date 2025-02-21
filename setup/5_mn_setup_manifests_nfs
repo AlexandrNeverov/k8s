@@ -2,4 +2,4 @@ sudo bash -c 'mkdir -p ~/manifests/nfs && cd ~/manifests/nfs && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m2_nfs_pv.yaml > pv.yaml && \
 curl -fsSL https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m2_nfs_pvc.yaml > pvc.yaml && \
 kubectl apply -f . && \
-sleep 5 && kubectl get pv && kubectl get pvc'
+sleep 10 && kubectl get pv && kubectl get pvc'
