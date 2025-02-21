@@ -28,11 +28,11 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_ROOT_PASSWORD
-        - name: MYSQL_DATABASE
+        - name: DB_NAME
           valueFrom:
             configMapKeyRef:
               name: wordpress-config
-              key: MYSQL_DATABASE
+              key: DN_NAME
         volumeMounts:
         - name: myvol
           mountPath: /var/lib/mysql
