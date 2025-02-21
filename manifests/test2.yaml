@@ -30,10 +30,6 @@ spec:
               key: MYSQL_DATABASE
         - name: WORDPRESS_DB_USER
           valueFrom:
-            configMapKeyRef:
-              name: wordpress-config
-              key: WORDPRESS_DB_USER
-          valueFrom:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_ROOT_PASSWORD
