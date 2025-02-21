@@ -4,5 +4,5 @@ metadata:
   name: wordpress-config
 data:
   MYSQL_DATABASE: database1
-  WORDPRESS_DB_HOST: "172.31.6.92:3306"
+  WORDPRESS_DB_HOST: "mysql:3306"
   WORDPRESS_DB_USER: "root"
