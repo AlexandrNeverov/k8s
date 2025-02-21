@@ -22,7 +22,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-secret
-              key:  MYSQL_ROOT_PASSWORD
+              key: MYSQL_ROOT_PASSWORD
         - name: MYSQL_DATABASE
           valueFrom:
             configMapKeyRef:
