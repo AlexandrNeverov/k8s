@@ -1,3 +1,3 @@
-sudo bash -c 'kubectl apply -f https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m1_wp_deployment.yamll && \
+sudo bash -c 'kubectl apply -f https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m1_wp_deployment.yaml && \
 kubectl apply -f https://raw.githubusercontent.com/AlexandrNeverov/k8s/refs/heads/main/manifests/m5_wp_service.yaml && \
 sleep 5 && kubectl get svc -A'
