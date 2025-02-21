@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: wordpress-config
 data:
-  MYSQL_DATABASE: "wordpress"
   WORDPRESS_DB_HOST: "mysql:3306"
+  MYSQL_DATABASE: "wordpress"
   WORDPRESS_DB_USER: "root"
