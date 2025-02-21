@@ -35,3 +35,36 @@ spec:
               key: MYSQL_ROOT_PASSWORD
         ports:
         - containerPort: 80
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - name: wordpress
+        image: wordpress:5.7-apache
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: "mysql:3306"  # имя сервиса MySQL
+        - name: WORDPRESS_DB_NAME
+          value: "wordpress"
+        - name: WORDPRESS_DB_USER
+          value: "root"  # имя пользователя MySQL
+        - name: WORDPRESS_DB_PASSWORD
+          value: "rootpassword"  # пароль для MySQL
+        ports:
+        - containerPort: 80
