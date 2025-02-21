@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress
+  name: mysql
 spec:
   selector:
-    app: wordpress
+    app: mysql
   ports:
-    - port: 80
-      targetPort: 80
-  type: NodePort 
+    - port: 3306
+      targetPort: 3306
+  type: NodePort  # Тип NodePort для доступа из внешней сети
