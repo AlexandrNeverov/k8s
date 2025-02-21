@@ -19,12 +19,19 @@ spec:
         image: wordpress:5.7-apache
         env:
         - name: WORDPRESS_DB_HOST
-          value: "mysql:3306"  # имя сервиса MySQL
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-config
+              key: WORDPRESS_DB_HOST
         - name: WORDPRESS_DB_NAME
-          value: "wordpress"
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-config
+              key: MYSQL_DATABASE
         - name: WORDPRESS_DB_USER
-          value: "root"  # имя пользователя MySQL
-        - name: WORDPRESS_DB_PASSWORD
-          value: "rootpassword"  # пароль для MySQL
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
         ports:
         - containerPort: 80
