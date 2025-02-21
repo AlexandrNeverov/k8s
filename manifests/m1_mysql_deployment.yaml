@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  creationTimestamp: null
   labels:
     app: mysql
 spec:
@@ -10,33 +9,30 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: mysql
     spec:
-      nodeSelector:
-        worker_2: "true" 
       containers:
-      - image: mysql:5.7
-        name: mysql
+      - name: mysql
+        image: mysql:5.7
         env:
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_ROOT_PASSWORD
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: wordpress-config
-              key: DN_NAME
-        volumeMounts:
-        - name: myvol
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: myvol
-        persistentVolumeClaim:
-          claimName: mysql-pvc
+          value: "rootpassword"  # Замените на ваш пароль
+        - name: MYSQL_DATABASE
+          value: "wordpress"
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  type: NodePort  # Тип NodePort для доступа из внешней сети
