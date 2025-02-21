@@ -1,15 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
-  namespace: default
+  name: wordpress
 spec:
   selector:
-    app: mysql
+    app: wordpress
   ports:
-    - protocol: TCP
-      port: 3306
-      targetPort: 3306
-  clusterIP: None
-  nodeSelector:
-    worker_2: "true"
+    - port: 80
+      targetPort: 80
+  type: NodePort 
